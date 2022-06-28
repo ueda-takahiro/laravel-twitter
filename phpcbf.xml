@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ruleset name="PHP_CodeSniffer">
+
+    <description>PHPCBF configuration file.</description>
+    <file>.</file>
+
+    <arg name="extensions" value="php" />
+    <!-- Our base rule: set to PSR12-->
+    <rule ref="PSR12">
+        <exclude name="Generic.Files.LineLength"/>
+        <exclude name="Generic.ControlStructures.InlineControlStructure"/>
+    </rule>
+    <!-- 返り値の型指定 -->
+    <rule ref="PSR12.Functions.ReturnTypeDeclaration"/>
+    <!-- 未使用の引数を警告 -->
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+</ruleset>
