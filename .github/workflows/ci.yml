@@ -50,7 +50,7 @@ jobs:
         run: sudo update-alternatives --set php /usr/bin/php8.1
         # From here: https://github.com/phpstan/phpstan
       - uses: technote-space/get-diff-action@v6
-        run: echo ${{ env.GIT_DIFF }}
+      - run: echo ${{ env.GIT_DIFF }}
       - name: analyze
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
