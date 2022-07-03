@@ -58,4 +58,4 @@ jobs:
       - name: analyze
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ${{ env.GIT_DIFF }} | grep '.php' | xargs -IXXX ./vendor/bin/phpstan analyze XXX --error-format=raw  | reviewdog -name="phpstan" -f=phpstan -diff=${{ env.GIT_DIFF }} -reporter=github-pr-review
+        run: git diff --name-only origin/${{ github.base_ref }} HEAD | grep '.php' | xargs -IXXX ./vendor/bin/phpstan analyze XXX --error-format=raw -l 5  | reviewdog -name="phpstan" -f=phpstan -diff="git diff --name-only origin/${{ github.base_ref }} HEAD" -reporter=github-pr-review
