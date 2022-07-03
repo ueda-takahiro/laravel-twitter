@@ -27,9 +27,11 @@ jobs:
       - name: setup php 8.1
         run: sudo update-alternatives --set php /usr/bin/php8.1
         # From here: https://github.com/squizlabs/PHP_CodeSniffer
+      - name: Resolve dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: set php-version
-        run: ./vendor/bin/phpcs --config-set php_version 70234
+        run: ./vendor/bin/phpcs --config-set php_version 80104
       - name: phpcbf & commit
         run: |
           ./vendor/bin/phpcbf --standard=phpcbf.xml --extensions=php ${{ env.GIT_DIFF }} || git add ${{ env.GIT_DIFF }}
@@ -49,7 +51,11 @@ jobs:
       - name: setup php 8.1
         run: sudo update-alternatives --set php /usr/bin/php8.1
         # From here: https://github.com/phpstan/phpstan
+      - uses: technote-space/get-diff-action@v6
+      - run: echo ${{ env.GIT_DIFF }}
+      - name: Resolve dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
       - name: analyze
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: git diff --name-only origin/${{ github.base_ref }} HEAD | xargs -IXXX ./vendor/bin/phpstan analyze XXX --error-format=raw -c phpstan.neon | reviewdog -name="phpstan" -f=phpstan -diff="git diff origin/${{ github.base_ref }} HEAD" -reporter=github-pr-review
+        run: git diff --name-only origin/${{ github.base_ref }} HEAD | grep '.php' | xargs -IXXX ./vendor/bin/phpstan analyze XXX --error-format=raw -l 5  | reviewdog -name="phpstan" -f=phpstan -diff="git diff --name-only origin/${{ github.base_ref }} HEAD" -reporter=github-pr-review
