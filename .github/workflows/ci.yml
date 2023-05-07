@@ -40,9 +40,9 @@ jobs:
 
   # 静的解析
   analyze:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - uses: reviewdog/action-setup@v1
