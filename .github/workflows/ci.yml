@@ -4,10 +4,10 @@ jobs:
   # 構文チェック
   lint:
     # From here: https://github:com/actions/virtual-environments
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       # From here: https://github.com/actions/checkout
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # 全てのブランチを取得する
           fetch-depth: 0
@@ -40,9 +40,9 @@ jobs:
 
   # 静的解析
   analyze:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - uses: reviewdog/action-setup@v1
